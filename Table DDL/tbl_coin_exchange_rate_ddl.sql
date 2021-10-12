@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_coin_exchange_rate;
+-- DROP TABLE public.tbl_coin_exchange_rate;
 
-CREATE TABLE tbl_coin_exchange_rate (
+CREATE TABLE public.tbl_coin_exchange_rate (
 	id_coin_exchange_rate uuid NOT NULL DEFAULT uuid_generate_v1(),
 	coin_name varchar(8) NOT NULL,
 	network_name varchar(16) NULL,
@@ -23,8 +23,8 @@ CREATE TABLE tbl_coin_exchange_rate (
 	CONSTRAINT tbl_coin_exchange_rate_pkey PRIMARY KEY (id_coin_exchange_rate)
 );
 CREATE INDEX tbl_coin_exchange_rate_block_number_idx ON public.tbl_coin_exchange_rate USING btree (block_number DESC);
+CREATE INDEX tbl_coin_exchange_rate_coin_name_idx ON public.tbl_coin_exchange_rate USING btree (coin_name);
 
 -- Permissions
 
 ALTER TABLE public.tbl_coin_exchange_rate OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_coin_exchange_rate TO u5p3hgrt8h7nt4;

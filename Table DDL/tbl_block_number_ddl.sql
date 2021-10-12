@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_block_number;
+-- DROP TABLE public.tbl_block_number;
 
-CREATE TABLE tbl_block_number (
+CREATE TABLE public.tbl_block_number (
 	id_block_number uuid NOT NULL DEFAULT uuid_generate_v1(),
 	block_number numeric NULL,
 	agent_id varchar(8) NULL,
@@ -20,5 +20,4 @@ CREATE TABLE tbl_block_number (
 -- Permissions
 
 ALTER TABLE public.tbl_block_number OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_block_number TO u5p3hgrt8h7nt4;
 

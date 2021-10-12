@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_user_account;
+-- DROP TABLE public.tbl_user_account;
 
-CREATE TABLE tbl_user_account (
+CREATE TABLE public.tbl_user_account (
 	id_user_account uuid NOT NULL DEFAULT uuid_generate_v1(),
 	address varchar(40) NOT NULL,
 	total_liquidity_eth numeric NULL,
@@ -31,4 +31,3 @@ CREATE INDEX tbl_user_account_address_idx ON public.tbl_user_account USING btree
 -- Permissions
 
 ALTER TABLE public.tbl_user_account OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_user_account TO u5p3hgrt8h7nt4;

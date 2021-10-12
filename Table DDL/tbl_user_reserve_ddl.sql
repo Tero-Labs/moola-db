@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_user_reserve;
+-- DROP TABLE public.tbl_user_reserve;
 
-CREATE TABLE tbl_user_reserve (
+CREATE TABLE public.tbl_user_reserve (
 	id_user_reserve uuid NOT NULL DEFAULT uuid_generate_v1(),
 	coin_name varchar(8) NOT NULL,
 	address varchar(40) NOT NULL,
@@ -34,5 +34,3 @@ CREATE INDEX tbl_user_reserve_address_idx ON public.tbl_user_reserve USING btree
 -- Permissions
 
 ALTER TABLE public.tbl_user_reserve OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_user_reserve TO u5p3hgrt8h7nt4;
-

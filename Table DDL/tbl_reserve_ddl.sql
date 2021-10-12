@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_reserve;
+-- DROP TABLE public.tbl_reserve;
 
-CREATE TABLE tbl_reserve (
+CREATE TABLE public.tbl_reserve (
 	id_reserve uuid NOT NULL DEFAULT uuid_generate_v1(),
 	coin_name varchar(8) NOT NULL,
 	total_liquidity numeric NOT NULL,
@@ -35,4 +35,3 @@ CREATE TABLE tbl_reserve (
 -- Permissions
 
 ALTER TABLE public.tbl_reserve OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_reserve TO u5p3hgrt8h7nt4;

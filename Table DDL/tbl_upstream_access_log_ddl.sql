@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_upstream_access_log;
+-- DROP TABLE public.tbl_upstream_access_log;
 
-CREATE TABLE tbl_upstream_access_log (
+CREATE TABLE public.tbl_upstream_access_log (
 	id_upstream_access_log uuid NOT NULL DEFAULT uuid_generate_v1(),
 	procedure_called_from varchar(64) NULL,
 	base_url varchar(255) NULL,
@@ -26,4 +26,4 @@ CREATE TABLE tbl_upstream_access_log (
 -- Permissions
 
 ALTER TABLE public.tbl_upstream_access_log OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_upstream_access_log TO u5p3hgrt8h7nt4;
+

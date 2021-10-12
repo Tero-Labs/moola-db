@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_user_activity;
+-- DROP TABLE public.tbl_user_activity;
 
-CREATE TABLE tbl_user_activity (
+CREATE TABLE public.tbl_user_activity (
 	id_user_activity uuid NOT NULL DEFAULT uuid_generate_v1(),
 	address varchar(40) NOT NULL,
 	coin_name varchar(8) NOT NULL,
@@ -23,6 +23,7 @@ CREATE TABLE tbl_user_activity (
 	update_datetime timestamptz NULL,
 	creation_datetime timestamptz NULL DEFAULT now(),
 	enabled bool NULL DEFAULT true,
+	claimed_currency varchar(8) NULL,
 	CONSTRAINT tbl_user_activity_pkey PRIMARY KEY (id_user_activity),
 	CONSTRAINT tbl_user_activity_tx_timestamp_tx_hash_coin_name_activity_t_key UNIQUE (tx_timestamp, tx_hash, coin_name, activity_type)
 );
@@ -31,4 +32,3 @@ CREATE INDEX tbl_user_activity_address_idx ON public.tbl_user_activity USING btr
 -- Permissions
 
 ALTER TABLE public.tbl_user_activity OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_user_activity TO u5p3hgrt8h7nt4;

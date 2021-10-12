@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_downstream_access_log;
+-- DROP TABLE public.tbl_downstream_access_log;
 
-CREATE TABLE tbl_downstream_access_log (
+CREATE TABLE public.tbl_downstream_access_log (
 	id_downstream_access_log uuid NOT NULL DEFAULT uuid_generate_v1(),
 	procedure_called_from varchar(64) NULL,
 	base_url varchar(255) NULL,

@@ -2,9 +2,9 @@
 
 -- Drop table
 
--- DROP TABLE tbl_reserve_configuration;
+-- DROP TABLE public.tbl_reserve_configuration;
 
-CREATE TABLE tbl_reserve_configuration (
+CREATE TABLE public.tbl_reserve_configuration (
 	id_reserve_configuration uuid NOT NULL DEFAULT uuid_generate_v1(),
 	coin_name varchar(8) NOT NULL,
 	ltv numeric NOT NULL,
@@ -29,4 +29,3 @@ CREATE TABLE tbl_reserve_configuration (
 -- Permissions
 
 ALTER TABLE public.tbl_reserve_configuration OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON TABLE public.tbl_reserve_configuration TO u5p3hgrt8h7nt4;
