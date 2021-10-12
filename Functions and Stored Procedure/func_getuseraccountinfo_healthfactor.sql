@@ -7,6 +7,10 @@ declare
 temp_health_factor numeric;
 temp_liquidation_price numeric;
 
+--- 12th July 2021 - Monday --
+celo_total_collateral numeric;
+celo_total_debt numeric;
+
 health_state character varying;
 
 BEGIN
@@ -19,21 +23,54 @@ BEGIN
 	-- CORE SQL - 
 	
 	
-
+	---- ================================================-----
+	---- START OLD CODE --------
 	--- HEALTH-FACTOR,LIQUIDATION-PRICE ---
-	select health_factor into temp_health_factor 
+	--select health_factor into temp_health_factor 
+	--from tbl_user_account
+	--where address=in_address
+	----and enabled=true
+	--order by block_number desc limit 1;
+
+	
+	--- FIXED liquidation_price 20-07-21
+	--if temp_health_factor = 0 then
+	--	temp_liquidation_price = 0;
+	--else
+	--	temp_liquidation_price = 1 / temp_health_factor;
+	--end if;
+	---- END OLD CODE --------
+	---- ================================================-----
+
+
+	---- ================================================-----
+	---- START NEW CODE --------
+	---- 12 Jul 2021 -----------
+	select 	health_factor 		, total_collateral_eth,  total_borrows_eth
+			into
+			temp_health_factor  , celo_total_collateral , celo_total_debt
+	
 	from tbl_user_account
+	
 	where address=in_address
 	--and enabled=true
 	order by block_number desc limit 1;
 
+
+	--temp_liquidation_price =  health_factor --- for DB
 	
-	--- FIXED liquidation_price 20-07-21
-	if temp_health_factor = 0 then
-		temp_liquidation_price = 0;
-	else
-		temp_liquidation_price = 1 / temp_health_factor;
-	end if;
+    if temp_health_factor > 99999999999999999 then
+        temp_liquidation_price = 0;
+        if celo_total_collateral = 0 and celo_total_debt = 0 then
+             temp_health_factor = 0;
+        end if;
+    else
+        temp_liquidation_price = 1 / temp_health_factor;
+    end if;
+
+
+	---- END NEW CODE --------
+	---- ================================================-----
 
 	
 	if temp_health_factor < 1 then
@@ -53,11 +90,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getuseraccountinfo_healthfactor(varchar,varchar) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_healthfactor(varchar,varchar) TO public;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_healthfactor(varchar,varchar) TO u5p3hgrt8h7nt4;
-
-

@@ -15,17 +15,17 @@ BEGIN
 	
     select usd_exchange_rate into celo_to_usd 
 	from tbl_coin_exchange_rate 
-	where coin_name = 'Celo' and enabled=true
+	where coin_name = 'Celo' --and enabled=true
 	order by block_number desc limit 1;
 	
 	select usd_exchange_rate into cusd_to_usd 
 	from tbl_coin_exchange_rate 
-	where coin_name = 'cUSD' and enabled=true
+	where coin_name = 'cUSD' --and enabled=true
 	order by  block_number desc limit 1;
 
 	select usd_exchange_rate into ceuro_to_usd 
 	from tbl_coin_exchange_rate 
-	where coin_name = 'cEUR' and enabled=true
+	where coin_name = 'cEUR' --and enabled=true
 	order by block_number desc limit 1;
 
 
@@ -67,9 +67,4 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getexchange_rate() OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getexchange_rate() TO u5p3hgrt8h7nt4;
 

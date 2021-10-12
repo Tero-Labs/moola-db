@@ -45,8 +45,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getexchange_rate_ceur_to_x_nearest_past(varchar,numeric,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getexchange_rate_ceur_to_x_nearest_past(varchar,numeric,numeric) TO u5p3hgrt8h7nt4;

@@ -6,6 +6,7 @@ declare
 --- Precedence - usd > celo > cusd > ceuro ?
 converted_exchange_base_rate numeric;
 -- value_out numeric;
+-- 20th September 2021, Monday - Transformed to extended mode.
 BEGIN
 	-- Created DateTime 5th June 2021 -  - 
 	-- Author: Mohammad Abdur Rahman --
@@ -19,6 +20,12 @@ BEGIN
 	from tbl_coin_exchange_rate 
 	where coin_name = 'Celo' -- and enabled=true
 	order by block_number desc limit 1;
+
+	--select ceuro_exchange_rate into converted_exchange_base_rate
+	--from tbl_coin_exchange_rate_asset 
+	--where source_coin_name = 'Celo' 
+	--and destination_coin_name =  -- and enabled=true
+	--order by block_number desc limit 1;
 	
 	return converted_exchange_base_rate * in_value;
 
@@ -26,8 +33,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getexchange_rate_celo_to_ceur(numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getexchange_rate_celo_to_ceur(numeric) TO u5p3hgrt8h7nt4;

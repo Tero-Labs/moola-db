@@ -11,17 +11,11 @@ BEGIN
 
 	------------------- Code Starts Here ---------------------
 	--- Activeusers
-	select count(distinct address) into out_activeusers from tbl_user_account;   --- where enabled=True;
+	--select count(distinct address) into out_activeusers from tbl_user_account;   --- where enabled=True;
+	--- 23rd July 2021 - Friday --- To migitate the ubeswap users (Tahlil's)
+	select count(distinct address) into out_activeusers from tbl_user_account where agent_id ='0';   --- where enabled=True;
 
 ------------------- Code Ends Here ---------------------
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getreservedata_activeusers(numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_activeusers(numeric) TO public;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_activeusers(numeric) TO u5p3hgrt8h7nt4;
-
-

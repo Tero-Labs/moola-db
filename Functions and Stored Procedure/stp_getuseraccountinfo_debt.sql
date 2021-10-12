@@ -30,11 +30,3 @@ BEGIN
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getuseraccountinfo_debt(varchar,varchar,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_debt(varchar,varchar,numeric) TO public;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_debt(varchar,varchar,numeric) TO u5p3hgrt8h7nt4;
-
-

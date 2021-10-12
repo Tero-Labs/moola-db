@@ -26,9 +26,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getexchange_rate_celo_to_cusd(numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getexchange_rate_celo_to_cusd(numeric) TO u5p3hgrt8h7nt4;
-

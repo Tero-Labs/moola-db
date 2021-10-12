@@ -47,10 +47,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getreserve_data() OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getreserve_data() TO public;
-GRANT ALL ON FUNCTION public.func_getreserve_data() TO u5p3hgrt8h7nt4;
-

@@ -55,9 +55,6 @@ if in_currency = 'Celo' then
 		
  elseif in_currency = 'cUSD' then
 	
-		--grand_out_borrow  := cusd_borrowed_stable  + cusd_borrowed_variable + 
-		--			 		 func_getexchange_rate_cusd_to_x('cUSD',cusd_borrowed_stable  + cusd_borrowed_variable) +
-		--			 		 func_getexchange_rate_ceur_to_x('cUSD',ceuro_borrowed_stable  + ceuro_borrowed_variable);
 					 		
 		grand_out_borrow  := cusd_borrowed_stable  + cusd_borrowed_variable + 
                              func_getexchange_rate_celo_to_x('cUSD',celo_borrowed_stable  + celo_borrowed_variable) +
@@ -69,9 +66,6 @@ if in_currency = 'Celo' then
 	
 elseif  in_currency = 'cEUR' then 
     
-		--grand_out_borrow  := ceuro_borrowed_stable  + ceuro_borrowed_variable + 
-		--			 		 func_getexchange_rate_cusd_to_x('cEUR',cusd_borrowed_stable  + cusd_borrowed_variable) +
-		--			 		 func_getexchange_rate_ceur_to_x('cEUR',ceuro_borrowed_stable  + ceuro_borrowed_variable);	
 					 		
 		grand_out_borrow  := ceuro_borrowed_stable  + ceuro_borrowed_variable + 
                              func_getexchange_rate_cusd_to_x('cEUR',cusd_borrowed_stable  + cusd_borrowed_variable) +
@@ -91,10 +85,3 @@ out_totalborrowed;
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getreservedata_totalborrowed(varchar,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_totalborrowed(varchar,numeric) TO public;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_totalborrowed(varchar,numeric) TO u5p3hgrt8h7nt4;
-

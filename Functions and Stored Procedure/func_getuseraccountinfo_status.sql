@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION public.func_getuseraccountinfo_status(in_address character varying, in_currency character varying)
- RETURNS TABLE("healthFactor" numeric, "liquidationPrice" numeric, state text, "currentLTV" numeric, "maximumLTV" numeric, "liquidationThreshold" numeric, "CeloInterestRate" numeric, "cUSDInterestRate" numeric, "cEURInterestRate" numeric, "CelototalCollateral" numeric, "cUSDtotalCollateral" numeric, "cEURtotalCollateral" numeric, "CelototalDebt" numeric, "cUSDtotalDebt" numeric, "cEURtotalDebt" numeric, "currentPrice" numeric, "liquidationPenalty" numeric, "remainingDebt" numeric, "totalFeeCelo" numeric, "totalFeecUSD" numeric, "totalFeecEUR" numeric)
+ RETURNS TABLE("healthFactor" numeric, "liquidationPrice" numeric, state text, "currentLTV" numeric, "maximumLTV" numeric, "liquidationThreshold" numeric, "CelovariableInterestRate" numeric, "cUSDvariableInterestRate" numeric, "cEURvariableInterestRate" numeric, "CelostableInterestRate" numeric, "cUSDstableInterestRate" numeric, "cEURstableInterestRate" numeric, "CelototalCollateral" numeric, "cUSDtotalCollateral" numeric, "cEURtotalCollateral" numeric, "CelototalDebt" numeric, "cUSDtotalDebt" numeric, "cEURtotalDebt" numeric, "currentPrice" numeric, "liquidationPenalty" numeric, "remainingDebt" numeric, "totalFeeCelo" numeric, "totalFeecUSD" numeric, "totalFeecEUR" numeric)
  LANGUAGE plpgsql
 AS $function$
 declare
@@ -18,9 +18,16 @@ celo_liquidationpenalty numeric;
 
 
 --- 24th June 2021 --- Thrusday
-celo_interest_rate numeric;
-cusd_interest_rate numeric;
-ceuro_interest_rate numeric;
+celo_variable_interest_rate numeric;
+cusd_variable_interest_rate numeric;
+ceuro_variable_interest_rate numeric;
+
+
+--- 30th July 2021 --- Friday
+celo_stable_interest_rate numeric;
+cusd_stable_interest_rate numeric;
+ceuro_stable_interest_rate numeric;
+
 
 --- 24th June 2021 --- Thrusday 
 celo_total_collateral numeric;
@@ -120,17 +127,23 @@ BEGIN
 	-------------------------------------------
     --[tbl_reserve]
 	---- 2nd July 2021 Friday ---
-	select variable_borrow_rate into celo_interest_rate
+	--select variable_borrow_rate into celo_variable_interest_rate
+	--- 30th July 2021 Friday ---
+	select variable_borrow_rate,stable_borrow_rate into celo_variable_interest_rate,celo_stable_interest_rate
 	from tbl_reserve
 	where coin_name ='Celo' --and enabled=true 
 	order by block_number desc limit 1;
 
-	select variable_borrow_rate into cusd_interest_rate
+	--select variable_borrow_rate into cusd_variable_interest_rate
+	--- 30th July 2021 Friday ---
+	select variable_borrow_rate,stable_borrow_rate into cusd_variable_interest_rate,cusd_stable_interest_rate
 	from tbl_reserve
 	where coin_name ='cUSD' --and enabled=true 
 	order by block_number desc limit 1;
 
-	select variable_borrow_rate into ceuro_interest_rate
+	--select variable_borrow_rate into ceuro_variable_interest_rate
+	--- 30th July 2021 Friday ---
+	select variable_borrow_rate,stable_borrow_rate into ceuro_variable_interest_rate,ceuro_stable_interest_rate
 	from tbl_reserve
 	where coin_name ='cEUR' --and enabled=true 
 	order by block_number desc limit 1;
@@ -157,23 +170,34 @@ BEGIN
 	where  address=in_address --and enabled=true 
 	order by block_number desc limit 1;
 --- =====================================================================================
+--- Process in the 'action' parameter
 
 
+---------------------------------------
+--- 20th July 2021
+--- Need Health Factor via calculation - not from DB 
+
+
+	--- OLD CODE START ---------
 	--- FIXED 10-07-21
-	if temp_health_factor = 0 then
-		liquidation_price = 0;
-	else
-		liquidation_price = 1 / temp_health_factor;
-	end if;
-	
-	----------------------
-	--- Retrieve current price
-    --- usd exchange rate has no function ---
-	-- for currentPrice in output parameter
-	select usd_exchange_rate into temp_currentPrice
-	from tbl_coin_exchange_rate 
-	where coin_name = in_currency --and enabled=true
-	order by block_number desc limit 1;
+	--if temp_health_factor = 0 then
+	--	liquidation_price = 0;
+	--else
+	--	liquidation_price = 1 / temp_health_factor;
+	--end if;
+	--- OLD CODE END ------------	
+
+	--- 12 July 2021 - Monday ---
+	--- Start ------------------------
+	if temp_health_factor > 99999999999999999 then
+        liquidation_price = 0;
+        if celo_total_collateral = 0 and celo_total_debt = 0 then
+             temp_health_factor = 0;
+        end if;
+    else
+        liquidation_price = 1 / temp_health_factor;
+    end if;
+	------ END ------------
 
 
     if temp_health_factor < 1 then
@@ -196,6 +220,15 @@ BEGIN
 
     end if;
    
+
+   	----------------------
+	--- Retrieve current price
+    --- usd exchange rate has no function ---
+	-- for currentPrice in output parameter
+	select usd_exchange_rate into temp_currentPrice
+	from tbl_coin_exchange_rate 
+	where coin_name = in_currency --and enabled=true
+	order by block_number desc limit 1;
    
    
     --- *** =======================================================================
@@ -216,7 +249,10 @@ BEGIN
 	
 	select temp_health_factor , liquidation_price , health_state , temp_currentltv , temp_maximumltv , temp_liquidation_threshold ,
 	
-	celo_interest_rate , cusd_interest_rate , ceuro_interest_rate ,
+	--celo_interest_rate , cusd_interest_rate , ceuro_interest_rate ,
+	celo_variable_interest_rate , cusd_variable_interest_rate , ceuro_variable_interest_rate , --- 30th Jul 2021
+	
+	celo_stable_interest_rate , cusd_stable_interest_rate , ceuro_stable_interest_rate , ---- 30th Jul 2021
 	
 	celo_total_collateral , cusd_total_collateral , ceuro_total_collateral ,
 	
@@ -230,11 +266,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getuseraccountinfo_status(varchar,varchar) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_status(varchar,varchar) TO public;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_status(varchar,varchar) TO u5p3hgrt8h7nt4;
-
-

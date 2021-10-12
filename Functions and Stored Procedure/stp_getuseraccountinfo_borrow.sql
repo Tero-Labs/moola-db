@@ -21,11 +21,3 @@ BEGIN
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getuseraccountinfo_borrow(varchar) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_borrow(varchar) TO public;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_borrow(varchar) TO u5p3hgrt8h7nt4;
-
-

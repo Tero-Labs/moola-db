@@ -16,7 +16,7 @@ BEGIN
 	   from tbl_user_reserve 
 	   where address=in_address
 	   and coin_name = 'Celo'
-	   and enabled=true
+	   --and enabled=true
 	   order by block_number DESC
 	   limit 1; 
   	------------------- Code Ends Here ---------------------
@@ -26,7 +26,7 @@ BEGIN
 	   from tbl_user_reserve 
 	   where address=in_address
 	   and coin_name = 'cEUR'
-	   and enabled=true
+	   --and enabled=true
 	   order by block_number DESC
 	   limit 1; 
  	------------------- Code Ends Here ---------------------
@@ -37,7 +37,7 @@ BEGIN
 	   from tbl_user_reserve 
 	   where address=in_address
 	   and coin_name = 'cUSD'
-	   and enabled=true
+	   --and enabled=true
 	   order by block_number desc 
 	   limit 1; 
 	------------------- Code Ends Here ---------------------
@@ -63,11 +63,3 @@ BEGIN
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getuseraccountinfo_balance(varchar,varchar,numeric,numeric,numeric,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_balance(varchar,varchar,numeric,numeric,numeric,numeric) TO public;
-GRANT ALL ON PROCEDURE public.stp_getuseraccountinfo_balance(varchar,varchar,numeric,numeric,numeric,numeric) TO u5p3hgrt8h7nt4;
-
-

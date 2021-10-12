@@ -35,11 +35,20 @@ BEGIN
 ------------------ Code Starts Here ---------------------
 
 --- Get the total number of users ---
+--SELECT Count(distinct address)
+--into
+--out_activeuser
+--FROM tbl_user_account;
+--where enabled = true; -- Commented for speedup
+
+
+
+--- 23rd July 2021 - Friday --- To migitate the ubeswap users (Tahlil's)
 SELECT Count(distinct address)
 into
 out_activeuser
-FROM tbl_user_account;
---where enabled = true; -- Commented for speedup
+FROM tbl_user_account
+where agent_id = '0';
 
 
 
@@ -108,11 +117,3 @@ out_deposited , out_totalborrowed;
 END;
 $procedure$
 ;
-
--- Permissions
-
-ALTER PROCEDURE public.stp_getreservedata_total_activeuser_deposited_borrowed(varchar,numeric,numeric,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_total_activeuser_deposited_borrowed(varchar,numeric,numeric,numeric) TO public;
-GRANT ALL ON PROCEDURE public.stp_getreservedata_total_activeuser_deposited_borrowed(varchar,numeric,numeric,numeric) TO u5p3hgrt8h7nt4;
-
-

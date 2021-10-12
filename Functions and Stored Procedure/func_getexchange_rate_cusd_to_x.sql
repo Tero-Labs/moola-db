@@ -43,9 +43,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getexchange_rate_cusd_to_x(varchar,numeric) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getexchange_rate_cusd_to_x(varchar,numeric) TO u5p3hgrt8h7nt4;
-

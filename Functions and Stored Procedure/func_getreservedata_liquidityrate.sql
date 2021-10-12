@@ -35,10 +35,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getreservedata_liquidityrate() OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getreservedata_liquidityrate() TO public;
-GRANT ALL ON FUNCTION public.func_getreservedata_liquidityrate() TO u5p3hgrt8h7nt4;
-

@@ -41,10 +41,3 @@ BEGIN
 END;
 $function$
 ;
-
--- Permissions
-
-ALTER FUNCTION public.func_getuseraccountinfo_borrow(varchar) OWNER TO u5p3hgrt8h7nt4;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_borrow(varchar) TO public;
-GRANT ALL ON FUNCTION public.func_getuseraccountinfo_borrow(varchar) TO u5p3hgrt8h7nt4;
-
