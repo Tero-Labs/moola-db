@@ -13,20 +13,46 @@ BEGIN
 	-- Required Tables -> tbl_user_account
 	-- CORE SQL - 
 	
-    select usd_exchange_rate into celo_to_usd 
-	from tbl_coin_exchange_rate 
-	where coin_name = 'Celo' --and enabled=true
-	order by block_number desc limit 1;
-	
-	select usd_exchange_rate into cusd_to_usd 
-	from tbl_coin_exchange_rate 
-	where coin_name = 'cUSD' --and enabled=true
-	order by  block_number desc limit 1;
+	--- Old
+    --select usd_exchange_rate into celo_to_usd 
+	--from tbl_coin_exchange_rate 
+	--where coin_name = 'Celo' --and enabled=true
+	--order by block_number desc limit 1;
 
-	select usd_exchange_rate into ceuro_to_usd 
-	from tbl_coin_exchange_rate 
-	where coin_name = 'cEUR' --and enabled=true
+
+	select destination_coin_value into
+	celo_to_usd 
+	from tbl_coin_exchange_rate_asset 
+	where source_coin_name = 'Celo' --and enabled=true
+	and 
+	destination_coin_name = 'cUSD'
 	order by block_number desc limit 1;
+
+	
+	-- Old 
+	--select usd_exchange_rate into cusd_to_usd 
+	--from tbl_coin_exchange_rate 
+	--where coin_name = 'cUSD' --and enabled=true
+	--order by  block_number desc limit 1;
+	 cusd_to_usd = 1;
+
+
+
+	--- Old
+	--select usd_exchange_rate into ceuro_to_usd 
+	--from tbl_coin_exchange_rate 
+	--where coin_name = 'cEUR' --and enabled=true
+	--order by block_number desc limit 1;
+	select destination_coin_value into
+	ceuro_to_usd
+	from tbl_coin_exchange_rate_asset 
+	where source_coin_name = 'cEUR' --and enabled=true
+	and 
+	destination_coin_name = 'cUSD'
+	order by block_number desc limit 1;
+
+
+
 
 
 	celo_to_cusd := celo_to_usd/cusd_to_usd;
@@ -67,4 +93,5 @@ BEGIN
 END;
 $function$
 ;
+
 
